@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookEase - Modern Reservation System</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .reservation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div id="vanta-bg" class="vanta-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i data-feather="calendar" class="text-indigo-600"></i>
+            <span class="text-xl font-bold text-indigo-700">BookEase</span>
+        </div>
+        <div class="hidden md:flex space-x-6">
+            <a href="#" class="text-indigo-600 font-medium">Dashboard</a>
+            <a href="#" class="text-gray-600 hover:text-indigo-600">Calendar</a>
+            <a href="#" class="text-gray-600 hover:text-indigo-600">Customers</a>
+            <a href="#" class="text-gray-600 hover:text-indigo-600">Settings</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
+                <i data-feather="bell"></i>
+            </button>
+            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">
+                JD
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Sidebar -->
+            <div class="w-full md:w-64 bg-white rounded-xl shadow-sm p-6 h-fit">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h2>
+                <button class="w-full flex items-center space-x-2 bg-indigo-600 text-white py-3 px-4 rounded-lg mb-3 hover:bg-indigo-700 transition">
+                    <i data-feather="plus"></i>
+                    <span>New Reservation</span>
+                </button>
+                <button class="w-full flex items-center space-x-2 bg-white text-gray-700 py-3 px-4 rounded-lg mb-3 border border-gray-200 hover:bg-gray-50 transition">
+                    <i data-feather="users"></i>
+                    <span>Add Customer</span>
+                </button>
+                <button class="w-full flex items-center space-x-2 bg-white text-gray-700 py-3 px-4 rounded-lg mb-3 border border-gray-200 hover:bg-gray-50 transition">
+                    <i data-feather="settings"></i>
+                    <span>Settings</span>
+                </button>
+
+                <h2 class="text-lg font-semibold text-gray-800 mt-8 mb-4">Today's Stats</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Reservations</span>
+                        <span class="font-medium text-indigo-600">24</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Capacity</span>
+                        <span class="font-medium">78%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Walk-ins</span>
+                        <span class="font-medium">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard -->
+            <div class="flex-1">
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">Today's Reservations</h2>
+                        <div class="flex space-x-2">
+                            <button class="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
+                                <i data-feather="filter"></i>
+                            </button>
+                            <button class="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
+                                <i data-feather="refresh-ccw"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Reservation Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Sample Reservation Card -->
+                        <div class="reservation-card bg-white border border-gray-200 rounded-xl p-4 transition duration-300 hover:shadow-md">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-medium text-gray-800">John Smith</h3>
+                                    <p class="text-sm text-gray-500">4 guests</p>
+                                </div>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Confirmed</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i data-feather="clock" class="w-4 h-4 mr-2"></i>
+                                <span>7:30 PM - 9:00 PM</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i data-feather="phone" class="w-4 h-4 mr-2"></i>
+                                <span>(555) 123-4567</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <button class="text-sm text-indigo-600 hover:text-indigo-800">View Details</button>
+                                <div class="flex space-x-2">
+                                    <button class="p-1 text-gray-500 hover:text-indigo-600">
+                                        <i data-feather="edit-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <button class="p-1 text-gray-500 hover:text-indigo-600">
+                                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add more reservation cards here -->
+                        <div class="reservation-card bg-white border border-gray-200 rounded-xl p-4 transition duration-300 hover:shadow-md">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Sarah Johnson</h3>
+                                    <p class="text-sm text-gray-500">2 guests</p>
+                                </div>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Pending</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i data-feather="clock" class="w-4 h-4 mr-2"></i>
+                                <span>6:00 PM - 7:30 PM</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i data-feather="phone" class="w-4 h-4 mr-2"></i>
+                                <span>(555) 987-6543</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <button class="text-sm text-indigo-600 hover:text-indigo-800">View Details</button>
+                                <div class="flex space-x-2">
+                                    <button class="p-1 text-gray-500 hover:text-indigo-600">
+                                        <i data-feather="edit-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <button class="p-1 text-gray-500 hover:text-indigo-600">
+                                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reservation-card bg-white border border-gray-200 rounded-xl p-4 transition duration-300 hover:shadow-md">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Michael Brown</h3>
+                                    <p class="text-sm text-gray-500">6 guests</p>
+                                </div>
+                                <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Cancelled</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i data-feather="clock" class="w-4 h-4 mr-2"></i>
+                                <span>8:00 PM - 10:00 PM</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i data-feather="phone" class="w-4 h-4 mr-2"></i>
+                                <span>(555) 456-7890</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <button class="text-sm text-indigo-600 hover:text-indigo-800">View Details</button>
+                                <div class="flex space-x-2">
+                                    <button class="p-1 text-gray-500 hover:text-indigo-600">
+                                        <i data-feather="edit-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <button class="p-1 text-gray-500 hover:text-indigo-600">
+                                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Section -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">Availability Calendar</h2>
+                        <button class="flex items-center space-x-1 text-indigo-600 hover:text-indigo-800">
+                            <span>View Full Calendar</span>
+                            <i data-feather="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <div class="min-w-max">
+                            <div class="grid grid-cols-7 gap-1 text-center mb-2">
+                                <div class="py-2 text-sm font-medium text-gray-500">Sun</div>
+                                <div class="py-2 text-sm font-medium text-gray-500">Mon</div>
+                                <div class="py-2 text-sm font-medium text-gray-500">Tue</div>
+                                <div class="py-2 text-sm font-medium text-gray-500">Wed</div>
+                                <div class="py-2 text-sm font-medium text-gray-500">Thu</div>
+                                <div class="py-2 text-sm font-medium text-gray-500">Fri</div>
+                                <div class="py-2 text-sm font-medium text-gray-500">Sat</div>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1">
+                                <!-- Calendar days would go here -->
+                                <!-- This is a simplified version -->
+                                <div class="h-16 border border-gray-100 flex items-center justify-center text-gray-400">28</div>
+                                <div class="h-16 border border-gray-100 flex items-center justify-center text-gray-400">29</div>
+                                <div class="h-16 border border-gray-100 flex items-center justify-center text-gray-400">30</div>
+                                <div class="h-16 border border-gray-100 flex items-center justify-center">1</div>
+                                <div class="h-16 border border-gray-100 flex items-center justify-center bg-indigo-50 text-indigo-600 font-medium">2</div>
+                                <div class="h-16 border border-gray-100 flex items-center justify-center">3</div>
+                                <div class="h-16 border border-gray-100 flex items-center justify-center">4</div>
+                                <!-- More days would follow in a real implementation -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <h3 class="text-sm font-medium text-gray-500 mb-2">Availability for June 2</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <button class="py-2 px-3 text-sm border border-green-200 bg-green-50 text-green-700 rounded-lg hover:bg-green-100">11:00 AM</button>
+                            <button class="py-2 px-3 text-sm border border-green-200 bg-green-50 text-green-700 rounded-lg hover:bg-green-100">12:30 PM</button>
+                            <button class="py-2 px-3 text-sm border border-gray-200 bg-gray-50 text-gray-500 rounded-lg">2:00 PM</button>
+                            <button class="py-2 px-3 text-sm border border-green-200 bg-green-50 text-green-700 rounded-lg hover:bg-green-100">3:30 PM</button>
+                            <button class="py-2 px-3 text-sm border border-green-200 bg-green-50 text-green-700 rounded-lg hover:bg-green-100">5:00 PM</button>
+                            <button class="py-2 px-3 text-sm border border-red-200 bg-red-50 text-red-700 rounded-lg">6:30 PM</button>
+                            <button class="py-2 px-3 text-sm border border-gray-200 bg-gray-50 text-gray-500 rounded-lg">8:00 PM</button>
+                            <button class="py-2 px-3 text-sm border border-green-200 bg-green-50 text-green-700 rounded-lg hover:bg-green-100">9:30 PM</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Notification -->
+    <div class="fixed bottom-4 right-4">
+        <div class="bg-white rounded-lg shadow-lg p-4 flex items-center">
+            <div class="mr-3 p-2 rounded-full bg-indigo-100 text-indigo-600">
+                <i data-feather="mail"></i>
+            </div>
+            <div>
+                <p class="text-sm font-medium">Reservation Confirmed</p>
+                <p class="text-xs text-gray-500">Sarah Johnson for 6:00 PM</p>
+            </div>
+            <button class="ml-4 text-gray-400 hover:text-gray-600">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script>
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3f83f8,
+            backgroundColor: 0xf8fafc,
+            size: 0.8
+        });
+    </script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
