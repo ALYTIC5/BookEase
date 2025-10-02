@@ -1,208 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Reservation - BookEase</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .form-input {
-            transition: all 0.2s ease;
-        }
-        .form-input:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-        .customer-select:hover {
-            background-color: #f3f4f6;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>New Reservation - BookEase</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Poppins', sans-serif; }
+    .form-input { transition: all .2s ease; }
+    .form-input:focus { border-color:#6366f1; box-shadow:0 0 0 3px rgba(99,102,241,.2); }
+    .step-active { border-color:#6366f1; color:#6366f1; }
+    .btn { transition: transform .06s ease; }
+    .btn:active { transform: translateY(1px); }
+  </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <i data-feather="calendar" class="text-indigo-600"></i>
-            <span class="text-xl font-bold text-indigo-700">BookEase</span>
-        </div>
-        <div class="hidden md:flex space-x-6">
-            <a href="index.html" class="text-gray-600 hover:text-indigo-600">Dashboard</a>
-            <a href="calendar.html" class="text-gray-600 hover:text-indigo-600">Calendar</a>
-            <a href="#" class="text-gray-600 hover:text-indigo-600">Customers</a>
-            <a href="#" class="text-gray-600 hover:text-indigo-600">Settings</a>
-        </div>
-        <div class="flex items-center space-x-4">
-            <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
-                <i data-feather="bell"></i>
-            </button>
-            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">
-                JD
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800">New Reservation</h2>
-                <a href="index.html" class="text-gray-500 hover:text-gray-700">
-                    <i data-feather="x"></i>
-                </a>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                <!-- Progress Steps -->
-                <div class="border-b border-gray-200">
-                    <div class="flex">
-                        <div class="w-1/3 py-4 text-center border-b-2 border-indigo-600">
-                            <p class="text-sm font-medium text-indigo-600">1. Guest Details</p>
-                        </div>
-                        <div class="w-1/3 py-4 text-center border-b-2 border-gray-200">
-                            <p class="text-sm font-medium text-gray-500">2. Time & Date</p>
-                        </div>
-                        <div class="w-1/3 py-4 text-center border-b-2 border-gray-200">
-                            <p class="text-sm font-medium text-gray-500">3. Confirmation</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Form Content -->
-                <div class="p-6">
-                    <div class="mb-8">
-                        <h3 class="text-lg font-medium text-gray-800 mb-4">Select or Add Customer</h3>
-                        
-                        <!-- Customer Search -->
-                        <div class="relative mb-6">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-feather="search" class="text-gray-400"></i>
-                            </div>
-                            <input type="text" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Search customers...">
-                        </div>
-                        
-                        <!-- Recent Customers -->
-                        <div class="mb-6">
-                            <h4 class="text-sm font-medium text-gray-700 mb-3">Recent Customers</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div class="customer-select p-3 border border-gray-200 rounded-lg cursor-pointer hover:shadow-sm transition">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">
-                                            JS
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-gray-800">John Smith</p>
-                                            <p class="text-xs text-gray-500">(555) 123-4567</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="customer-select p-3 border border-gray-200 rounded-lg cursor-pointer hover:shadow-sm transition">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-medium">
-                                            SJ
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-gray-800">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">(555) 987-6543</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="customer-select p-3 border border-gray-200 rounded-lg cursor-pointer hover:shadow-sm transition">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 font-medium">
-                                            MB
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-gray-800">Michael Brown</p>
-                                            <p class="text-xs text-gray-500">(555) 456-7890</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="customer-select p-3 border border-gray-200 rounded-lg cursor-pointer hover:shadow-sm transition">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-medium">
-                                            EW
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-gray-800">Emily Wilson</p>
-                                            <p class="text-xs text-gray-500">(555) 789-0123</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-center my-4">
-                            <div class="w-full border-t border-gray-200"></div>
-                            <span class="px-3 bg-white text-sm text-gray-500">or</span>
-                            <div class="w-full border-t border-gray-200"></div>
-                        </div>
-                        
-                        <!-- New Customer Form -->
-                        <div class="space-y-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                    <input type="text" id="firstName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                    <input type="text" id="lastName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                    <input type="email" id="email" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                                    <input type="tel" id="phone" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
-                                <textarea id="notes" rows="3" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-between">
-                        <button class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-                            Cancel
-                        </button>
-                        <button class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center space-x-2">
-                            <span>Next: Select Time</span>
-                            <i data-feather="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <i data-feather="calendar" class="text-indigo-600"></i>
+      <span class="text-xl font-bold text-indigo-700">BookEase</span>
     </div>
+    <div class="hidden md:flex space-x-6">
+      <a href="index.html" class="text-gray-600 hover:text-indigo-600">Dashboard</a>
+      <a href="calendar.html" class="text-gray-600 hover:text-indigo-600">Calendar</a>
+      <a href="new-reservation.html" class="text-indigo-600 font-medium">New Reservation</a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200" aria-label="Notifications"><i data-feather="bell"></i></button>
+      <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">JD</div>
+    </div>
+  </nav>
 
-    <script>
-        feather.replace();
-        
-        // Simple customer select functionality
-        document.querySelectorAll('.customer-select').forEach(item => {
-            item.addEventListener('click', event => {
-                // Remove any existing selected state
-                document.querySelectorAll('.customer-select').forEach(i => {
-                    i.classList.remove('border-indigo-600', 'bg-indigo-50');
-                });
-                // Add selected state to clicked item
-                event.currentTarget.classList.add('border-indigo-600', 'bg-indigo-50');
-            });
-        });
-    </script>
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">New Reservation</h2>
+        <a href="index.html" class="text-gray-500 hover:text-gray-700" aria-label="Close"><i data-feather="x"></i></a>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <!-- Steps -->
+        <div class="border-b border-gray-200">
+          <div class="flex">
+            <div id="step1Tab" class="w-1/3 py-4 text-center border-b-2 step-active">
+              <p class="text-sm font-medium">1. Guest Details</p>
+            </div>
+            <div id="step2Tab" class="w-1/3 py-4 text-center border-b-2 border-gray-200 text-gray-500">
+              <p class="text-sm font-medium">2. Time & Date</p>
+            </div>
+            <div id="step3Tab" class="w-1/3 py-4 text-center border-b-2 border-gray-200 text-gray-500">
+              <p class="text-sm font-medium">3. Confirmation</p>
+            </div>
+          </div>
+        </div>
+
+        <form id="reservationForm" novalidate>
+          <!-- STEP 1: Guest -->
+          <div id="step1" class="p-6 space-y-6">
+            <div>
+              <h3 class="text-lg font-medium text-gray-800 mb-4">Guest Details</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                  <input type="text" id="firstName" name="firstName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                </div>
+                <div>
+                  <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                  <input type="text" id="lastName" name="lastName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <input type="email" id="email" name="email" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                </div>
+                <div>
+                  <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                  <input type="tel" id="phone" name="phone" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="partySize" class="block text-sm font-medium text-gray-700 mb-1">Party Size</label>
+              <input type="number" id="partySize" name="partySize" min="1" value="2" class="form-input w-32 px-3 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+
+            <div>
+              <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
+              <textarea id="notes" name="notes" rows="3" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Allergies, seating preferences, occasion, etc."></textarea>
+            </div>
+          </div>
+
+          <div class="flex justify-between px-6 pb-6">
+            <a href="index.html" class="btn px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Cancel</a>
+            <button type="button" id="toStep2" class="btn px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Next</button>
+          </div>
+
+          <!-- STEP 2: Time & Date -->
+          <div id="step2" class="p-6 space-y-6 hidden">
+            <h3 class="text-lg font-medium text-gray-800">Select Time & Date</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="date">Date</label>
+                <input type="date" id="date" name="date" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="time">Time</label>
+                <input type="time" id="time" name="time" class="form-input w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-sm font-medium text-gray-700 mb-2">Quick Picks</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2" id="quickTimes">
+                <button type="button" class="btn px-3 py-2 border border-green-200 bg-green-50 rounded-lg">11:00</button>
+                <button type="button" class="btn px-3 py-2 border border-green-200 bg-green-50 rounded-lg">12:30</button>
+                <button type="button" class="btn px-3 py-2 border border-green-200 bg-green-50 rounded-lg">15:30</button>
+                <button type="button" class="btn px-3 py-2 border border-green-200 bg-green-50 rounded-lg">18:00</button>
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <button type="button" id="backTo1" class="btn px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
+              <button type="button" id="toStep3" class="btn px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Review</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Confirmation -->
+          <div id="step3" class="p-6 space-y-6 hidden">
+            <h3 class="text-lg font-medium text-gray-800 mb-4">Review & Confirm</h3>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
+              <p class="text-gray-700"><span class="font-medium">Guest:</span> <span id="reviewName"></span></p>
+              <p class="text-gray-700"><span class="font-medium">Contact:</span> <span id="reviewContact"></span></p>
+              <p class="text-gray-700"><span class="font-medium">Party Size:</span> <span id="reviewParty"></span></p>
+              <p class="text-gray-700"><span class="font-medium">When:</span> <span id="reviewWhen"></span></p>
+              <p class="text-gray-700"><span class="font-medium">Notes:</span> <span id="reviewNotes"></span></p>
+            </div>
+
+            <div class="flex justify-between">
+              <button type="button" id="backTo2" class="btn px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
+              <button type="submit" class="btn px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Confirm Reservation</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success Toast -->
+      <div id="toast" class="fixed bottom-4 right-4 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-4 flex items-center">
+          <div class="mr-3 p-2 rounded-full bg-green-100 text-green-600"><i data-feather="check"></i></div>
+          <div>
+            <p class="text-sm font-medium">Reservation Created</p>
+            <p class="text-xs text-gray-500">Redirecting to calendar…</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    feather.replace();
+    const LS_KEY = 'bookease_bookings';
+
+    // Helpers
+    function loadBookings(){ try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
+    function saveBookings(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+    function todayISO(){ const d=new Date(); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); }
+
+    // Pre-set min date to today & prefill if URL has ?date=YYYY-MM-DD&time=HH:MM
+    (function initDateTimeInputs(){
+      const dateEl = document.getElementById('date');
+      const timeEl = document.getElementById('time');
+      dateEl.min = todayISO();
+
+      const params = new URLSearchParams(location.search);
+      const pDate = params.get('date'); const pTime = params.get('time');
+      if (pDate) dateEl.value = pDate;
+      if (pTime) timeEl.value = pTime;
+    })();
+
+    // Step navigation state
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const step1Tab = document.getElementById('step1Tab');
+    const step2Tab = document.getElementById('step2Tab');
+    const step3Tab = document.getElementById('step3Tab');
+
+    function setStep(active) {
+      [step1, step2, step3].forEach((el, i) => el.classList.toggle('hidden', i !== active-1));
+      [step1Tab, step2Tab, step3Tab].forEach((el, i) => {
+        if (i === active-1) { el.classList.add('step-active'); el.classList.remove('border-gray-200','text-gray-500'); }
+        else { el.classList.remove('step-active'); el.classList.add('border-gray-200','text-gray-500'); }
+      });
+      feather.replace();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Buttons
+    document.getElementById('toStep2').addEventListener('click', () => {
+      const form = document.getElementById('reservationForm');
+      // only validate fields in step 1
+      const requiredIds = ['firstName','lastName','email','phone','partySize'];
+      for (const id of requiredIds) {
+        const el = document.getElementById(id);
+        if (!el.checkValidity() || !el.value.trim()) { el.reportValidity(); return; }
+      }
+      setStep(2);
+    });
+
+    document.getElementById('backTo1').addEventListener('click', () => setStep(1));
+
+    document.getElementById('toStep3').addEventListener('click', () => {
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      if (!date) { document.getElementById('date').reportValidity(); return; }
+      if (!time) { document.getElementById('time').reportValidity(); return; }
+
+      // Fill review
+      const fn = document.getElementById('firstName').value.trim();
+      const ln = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const party = document.getElementById('partySize').value;
+      const notes = document.getElementById('notes').value.trim() || '—';
+
+      document.getElementById('reviewName').textContent = `${fn} ${ln}`;
+      document.getElementById('reviewContact').textContent = `${email} • ${phone}`;
+      document.getElementById('reviewParty').textContent = party;
+      document.getElementById('reviewWhen').textContent = `${date} @ ${time}`;
+      document.getElementById('reviewNotes').textContent = notes;
+
+      setStep(3);
+    });
+
+    document.getElementById('backTo2').addEventListener('click', () => setStep(2));
+
+    // Quick time picks
+    document.getElementById('quickTimes').addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'button') {
+        const t = e.target.textContent.trim();
+        document.getElementById('time').value = t.length === 5 ? t : t.padStart(5, '0');
+      }
+    });
+
+    // Final submit -> save + redirect
+    document.getElementById('reservationForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const booking = {
+        id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        partySize: parseInt(document.getElementById('partySize').value, 10) || 1,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        notes: document.getElementById('notes').value.trim()
+      };
+
+      // Basic past-date guard
+      const start = new Date(`${booking.date}T${booking.time}`);
+      const now = new Date();
+      if (isNaN(start.getTime())) { alert('Please pick a valid date & time.'); return; }
+      if (start < now && start.toDateString() !== now.toDateString()) {
+        if (!confirm('This time appears to be in the past. Create anyway?')) return;
+      }
+
+      const list = loadBookings();
+      list.push(booking);
+      saveBookings(list);
+
+      // Toast + redirect
+      const toast = document.getElementById('toast');
+      toast.classList.remove('hidden');
+      feather.replace();
+      setTimeout(() => { window.location.href = 'calendar.html'; }, 900);
+    });
+
+    // Init step 1
+    setStep(1);
+  </script>
 </body>
 </html>

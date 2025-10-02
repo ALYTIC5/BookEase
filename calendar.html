@@ -1,202 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar - BookEase</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .fc-event {
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            padding: 2px 4px;
-        }
-        .fc-daygrid-day-number {
-            color: #4b5563;
-        }
-        .fc .fc-toolbar-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #374151;
-        }
-        .fc .fc-button {
-            background-color: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            color: #4b5563;
-            text-transform: capitalize;
-            font-weight: 500;
-        }
-        .fc .fc-button-primary:not(:disabled).fc-button-active {
-            background-color: #6366f1;
-            border-color: #6366f1;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar - BookEase</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Poppins', sans-serif; }
+    .fc .fc-toolbar-title { font-size:1.25rem; font-weight:600; color:#374151; }
+    .fc .fc-button { background-color:#f3f4f6; border:1px solid #e5e7eb; color:#4b5563; text-transform:capitalize; font-weight:500; }
+    .fc .fc-button-primary:not(:disabled).fc-button-active,
+    .fc .fc-button-primary:hover { background-color:#6366f1; border-color:#6366f1; color:white; }
+  </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <i data-feather="calendar" class="text-indigo-600"></i>
-            <span class="text-xl font-bold text-indigo-700">BookEase</span>
-        </div>
-        <div class="hidden md:flex space-x-6">
-            <a href="index.html" class="text-gray-600 hover:text-indigo-600">Dashboard</a>
-            <a href="#" class="text-indigo-600 font-medium">Calendar</a>
-            <a href="#" class="text-gray-600 hover:text-indigo-600">Customers</a>
-            <a href="#" class="text-gray-600 hover:text-indigo-600">Settings</a>
-        </div>
-        <div class="flex items-center space-x-4">
-            <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
-                <i data-feather="bell"></i>
-            </button>
-            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">
-                JD
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-                <h2 class="text-xl font-semibold text-gray-800">Reservation Calendar</h2>
-                <div class="flex space-x-2">
-                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center space-x-2">
-                        <i data-feather="plus" class="w-4 h-4"></i>
-                        <span>New Booking</span>
-                    </button>
-                    <div class="relative">
-                        <button class="px-4 py-2 bg-white text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-50 flex items-center space-x-2">
-                            <span>Filter</span>
-                            <i data-feather="chevron-down" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Calendar -->
-            <div class="p-6">
-                <div id="calendar"></div>
-            </div>
-        </div>
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <i data-feather="calendar" class="text-indigo-600"></i>
+      <span class="text-xl font-bold text-indigo-700">BookEase</span>
     </div>
-
-    <!-- Event Modal -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="eventModal">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                <h3 class="text-lg font-medium text-gray-800">Reservation Details</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            <div class="p-6">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Customer</label>
-                    <p class="text-gray-800 font-medium">John Smith</p>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Date & Time</label>
-                    <p class="text-gray-800">June 2, 2023 · 7:30 PM - 9:00 PM</p>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Party Size</label>
-                    <p class="text-gray-800">4 guests</p>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact</label>
-                    <p class="text-gray-800">john.smith@example.com<br>(555) 123-4567</p>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Confirmed</span>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
-                    <p class="text-gray-800">Window seat preferred</p>
-                </div>
-            </div>
-            <div class="p-4 border-t border-gray-200 flex justify-end space-x-3">
-                <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-                    Cancel
-                </button>
-                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                    Edit Reservation
-                </button>
-            </div>
-        </div>
+    <div class="hidden md:flex space-x-6">
+      <a href="index.html" class="text-gray-600 hover:text-indigo-600">Dashboard</a>
+      <a href="calendar.html" class="text-indigo-600 font-medium">Calendar</a>
+      <a href="new-reservation.html" class="text-gray-600 hover:text-indigo-600">New Reservation</a>
     </div>
+    <div class="flex items-center space-x-4">
+      <a href="new-reservation.html" class="px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 hidden sm:inline-flex items-center space-x-2">
+        <i data-feather="plus" class="w-4 h-4"></i><span>New Booking</span>
+      </a>
+      <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200" aria-label="Notifications"><i data-feather="bell"></i></button>
+      <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">JD</div>
+    </div>
+  </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: [
-                    {
-                        title: 'John Smith - 4 guests',
-                        start: '2023-06-02T19:30:00',
-                        end: '2023-06-02T21:00:00',
-                        backgroundColor: '#6366f1',
-                        borderColor: '#6366f1'
-                    },
-                    {
-                        title: 'Sarah Johnson - 2 guests',
-                        start: '2023-06-02T18:00:00',
-                        end: '2023-06-02T19:30:00',
-                        backgroundColor: '#f59e0b',
-                        borderColor: '#f59e0b'
-                    },
-                    {
-                        title: 'Michael Brown - 6 guests (Cancelled)',
-                        start: '2023-06-02T20:00:00',
-                        end: '2023-06-02T22:00:00',
-                        backgroundColor: '#ef4444',
-                        borderColor: '#ef4444'
-                    },
-                    {
-                        title: 'Emily Wilson - 3 guests',
-                        start: '2023-06-05T12:30:00',
-                        end: '2023-06-05T14:00:00',
-                        backgroundColor: '#6366f1',
-                        borderColor: '#6366f1'
-                    },
-                    {
-                        title: 'David Lee - 5 guests',
-                        start: '2023-06-08T19:00:00',
-                        end: '2023-06-08T21:00:00',
-                        backgroundColor: '#6366f1',
-                        borderColor: '#6366f1'
-                    }
-                ],
-                eventClick: function(info) {
-                    document.getElementById('eventModal').classList.remove('hidden');
-                }
-            });
-            calendar.render();
-        });
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h2 class="text-xl font-semibold text-gray-800">Reservation Calendar</h2>
+        <div class="flex items-center gap-2">
+          <a href="new-reservation.html" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center space-x-2">
+            <i data-feather="plus" class="w-4 h-4"></i><span>New Booking</span>
+          </a>
+          <button id="todayBtn" class="px-4 py-2 bg-white text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-50">Today</button>
+        </div>
+      </div>
 
-        function closeModal() {
-            document.getElementById('eventModal').classList.add('hidden');
-        }
-    </script>
-    <script>
-        feather.replace();
-    </script>
+      <!-- Calendar -->
+      <div class="p-6">
+        <div id="calendar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Modal -->
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden" id="eventModal" aria-modal="true" role="dialog">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
+      <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-lg font-medium text-gray-800" id="modalTitle">Reservation Details</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600" aria-label="Close"><i data-feather="x"></i></button>
+      </div>
+      <div class="p-6 space-y-3">
+        <p class="text-gray-700"><span class="font-medium">When:</span> <span id="modalWhen"></span></p>
+        <p class="text-gray-700"><span class="font-medium">Party:</span> <span id="modalParty"></span></p>
+        <p class="text-gray-700"><span class="font-medium">Contact:</span> <span id="modalContact"></span></p>
+        <p class="text-gray-700"><span class="font-medium">Notes:</span> <span id="modalNotes">—</span></p>
+      </div>
+      <div class="p-4 border-t border-gray-200 flex justify-between gap-3">
+        <button id="deleteBtn" class="px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50">Delete</button>
+        <div class="flex gap-3">
+          <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">Close</button>
+          <a href="new-reservation.html" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">New</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <script>
+    const LS_KEY = 'bookease_bookings';
+    let calendar;
+    let currentEventId = null;
+
+    function loadBookings(){ try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
+    function saveBookings(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+    function bookingStartISO(b){ return new Date(`${b.date}T${b.time}`).toISOString(); }
+    function fmtDateTime(dt){ return new Date(dt).toLocaleString(); }
+
+    function mapToEvents(list){
+      return list.map(b=>({
+        id: b.id,
+        title: `${b.firstName} ${b.lastName} — ${b.partySize} guests`,
+        start: `${b.date}T${b.time}`,
+        end: `${b.date}T${padEndTime(b.time, 90)}`, // default 90min
+        backgroundColor: '#6366f1',
+        borderColor: '#6366f1',
+        extendedProps: { ...b }
+      }));
+    }
+    function padEndTime(time, minutes){
+      const [h,m] = time.split(':').map(Number);
+      const d = new Date(); d.setHours(h, m+minutes, 0, 0);
+      const hh = String(d.getHours()).padStart(2,'0');
+      const mm = String(d.getMinutes()).padStart(2,'0');
+      return `${hh}:${mm}`;
+    }
+
+    function openModal(ev){
+      const b = ev.extendedProps;
+      currentEventId = b.id;
+      document.getElementById('modalTitle').textContent = `${b.firstName} ${b.lastName}`;
+      document.getElementById('modalWhen').textContent = `${fmtDateTime(ev.start)} — ${fmtDateTime(ev.end || ev.start)}`;
+      document.getElementById('modalParty').textContent = `${b.partySize} guests`;
+      document.getElementById('modalContact').textContent = `${b.email} • ${b.phone}`;
+      document.getElementById('modalNotes').textContent = b.notes || '—';
+      document.getElementById('eventModal').classList.remove('hidden');
+      feather.replace();
+    }
+    function closeModal(){
+      document.getElementById('eventModal').classList.add('hidden');
+      currentEventId = null;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay' },
+        nowIndicator: true,
+        navLinks: true,
+        selectable: true,
+        dateClick: function(info){ window.location.href = 'new-reservation.html'; },
+        eventClick: function(info){ openModal(info.event); }
+      });
+      refreshEvents();
+
+      document.getElementById('todayBtn').addEventListener('click', ()=> calendar.today());
+      document.getElementById('deleteBtn').addEventListener('click', ()=>{
+        if (!currentEventId) return;
+        const left = loadBookings().filter(b => b.id !== currentEventId);
+        saveBookings(left);
+        closeModal();
+        refreshEvents();
+      });
+
+      feather.replace();
+    });
+
+    function refreshEvents(){
+      const list = loadBookings();
+      calendar.removeAllEvents();
+      calendar.addEventSource(mapToEvents(list));
+      calendar.render();
+    }
+  </script>
 </body>
 </html>
